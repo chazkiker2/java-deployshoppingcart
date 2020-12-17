@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/java-deployshoppingcart.iml" filepath="$PROJECT_DIR$/.idea/java-deployshoppingcart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shoppingcart/shoppingcart.iml" filepath="$PROJECT_DIR$/shoppingcart/shoppingcart.iml" />
     </modules>
   </component>
 </project>

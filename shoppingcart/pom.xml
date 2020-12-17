@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -36,11 +36,21 @@
             <optional>true</optional>
         </dependency>
 
+
+        <!-- DATABASE DEPENDENCIES START -->
+        <!-- DATABASE DEPENDENCIES START -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <!--            <scope>runtime</scope>-->
         </dependency>
+        <!-- DATABASE DEPENDENCIES END -->
+        <!-- DATABASE DEPENDENCIES END -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,14 +58,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JAVA FAKER -->
+        <!-- JAVA FAKER -->
         <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <!-- JAVA FAKER -->
+        <!-- JAVA FAKER -->
 
-        <!-- Swagger Dependencies Start -->
+        <!-- SWAGGER DEPENDENCIES START -->
+        <!-- SWAGGER DEPENDENCIES START -->
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -75,10 +90,12 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>2.9.2</version>
         </dependency>
-        <!-- Swagger Dependencies End -->
+        <!-- SWAGGER DEPENDENCIES END -->
+        <!-- SWAGGER DEPENDENCIES END -->
 
 
-        <!-- Security Dependencies Start -->
+        <!-- SECURITY DEPENDENCIES START -->
+        <!-- SECURITY DEPENDENCIES START -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -95,14 +112,35 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.6.RELEASE</version>
         </dependency>
-        <!-- Security Dependencies End -->
+        <!-- SECURITY DEPENDENCIES END -->
+        <!-- SECURITY DEPENDENCIES END -->
     </dependencies>
 
     <build>
+        <!-- MUST MATCH HEROKU APP NAME -->
+        <finalName>deployed-shoppingcart</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- HEROKU MAVEN PLUGIN CONFIGURATION -->
+            <!-- HEROKU MAVEN PLUGIN CONFIGURATION -->
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <appName>${project.build.finalName}</appName>
+                    <includeTarget>false</includeTarget>
+                    <includes>
+                        <include>${project.build.directory}/${project.build.finalName}.jar</include>
+                    </includes>
+                    <jdkVersion>${java.version}</jdkVersion>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -Dserver.port=$PORT -jar target/${project.build.finalName}.jar</web>
+                    </processTypes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
